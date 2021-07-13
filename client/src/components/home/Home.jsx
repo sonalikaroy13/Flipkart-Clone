@@ -15,7 +15,7 @@ const useStyle = makeStyles({
         background: '#FFFFFF',
         padding: 5,
         margin: '12px 0 0 10px',
-        width: '16%'
+        width: '17%'
     }
 })
 

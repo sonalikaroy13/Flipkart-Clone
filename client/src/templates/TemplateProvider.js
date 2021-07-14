@@ -1,13 +1,13 @@
-import { createContext } from "react";
+import React from 'react';
 import { CssBaseline } from "@material-ui/core";
-import { createMuiTheme, ThemeProvider } from "@material-ui/core/styles";
+import { ThemeProvider, createMuiTheme } from "@material-ui/core/styles";
 
-const TemplateContext = createContext(null);
+const TemplateContext = React.createContext(null);
 
 export const TemplateProvider = ({ children }) => {
     const theme = createMuiTheme({
         overrides: {
-            MuiDialog: {       
+            MuiDialog: {
                 paperWidthSm: {
                     maxWidth: 'unset'
                 }
@@ -19,16 +19,23 @@ export const TemplateProvider = ({ children }) => {
                         paddingTop: 0
                     }
                 }
+            },
+            MuiTableCell: {
+                root: {
+                    borderBottom: 0
+                }
             }
         }
-      });
+    });
 
-      return (
+    return (
         <TemplateContext.Provider>
             <ThemeProvider theme={theme}>
                 <CssBaseline />
                 {children}
             </ThemeProvider>
         </TemplateContext.Provider>
-      )
+    );
 }
+
+export default TemplateProvider;

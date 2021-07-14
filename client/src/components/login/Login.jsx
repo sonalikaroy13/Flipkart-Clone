@@ -1,5 +1,7 @@
 import { useState } from "react";
 import { Box, Button, Dialog, DialogContent, makeStyles, TextField, Typography } from "@material-ui/core";
+import { authenticateSignup } from "../../service/api.js";
+
 
 const useStyle = makeStyles({
     component: {
@@ -70,18 +72,40 @@ const initialValues = {
     }
 }
 
-const Login = ( {open, setOpen}) => {
+const signupInitialValues = {
+    firstname: '',
+    lastname: '',
+    username: '',
+    email: '',
+    password: '',
+    phone: ''
+}
+
+const Login = ( {open, setOpen, setAccount }) => {
     const classes = useStyle();
 
-    const [account, setAccount] = useState(initialValues.login);
+    const [account, toggleAccount] = useState(initialValues.login);
+    const [signup, setSignup] = useState(signupInitialValues);
 
     const handleClose = () => {
         setOpen(false);
         setAccount(initialValues.login);
     } 
 
-    const toggleAccount = () => {
-        setAccount(initialValues.signup);
+    const toggleUserAccount = () => {
+        toggleAccount(initialValues.signup);
+    }
+
+    const signupUser = async () => {
+        let response = await authenticateSignup(signup);
+        if(!response) return;
+        handleClose();
+        setAccount(signup.username);
+    }
+
+    const onInputChange = (e) => {
+        setSignup({ ...signup, [e.target.name]: e.target.value});
+        console.log(signup);
     }
 
     return (
@@ -101,16 +125,16 @@ const Login = ( {open, setOpen}) => {
                             <Button variant='contained' className={classes.loginBtn}>Login</Button>
                             <Typography style={{textAlign: 'center'}} className={classes.text}>OR</Typography>
                             <Button variant='contained' className={classes.requestBtn}>Request OTP</Button>
-                            <Typography onClick={() => toggleAccount()} className={classes.createText}>New to Flipkart? Create an account</Typography>
+                            <Typography onClick={() => toggleUserAccount()} className={classes.createText}>New to Flipkart? Create an account</Typography>
                         </Box> : 
                         <Box className={classes.login}>
-                            <TextField name='firstname' label='Enter FirstName' />
-                            <TextField name='lastname' label='Enter LastName' />
-                            <TextField name='username' label='Enter Username' />
-                            <TextField name='email' label='Enter Email' />
-                            <TextField name='password' label='Enter Password' />
-                            <TextField name='phone' label='Enter Phone Number' />
-                            <Button variant='contained' className={classes.loginBtn}>SignUp</Button>
+                            <TextField onChange={(e) => onInputChange(e)} name='firstname' label='Enter FirstName' />
+                            <TextField onChange={(e) => onInputChange(e)} name='lastname' label='Enter LastName' />
+                            <TextField onChange={(e) => onInputChange(e)} name='username' label='Enter Username' />
+                            <TextField onChange={(e) => onInputChange(e)} name='email' label='Enter Email' />
+                            <TextField onChange={(e) => onInputChange(e)} name='password' label='Enter Password' />
+                            <TextField onChange={(e) => onInputChange(e)} name='phone' label='Enter Phone Number' />
+                            <Button variant='contained' onclick={() => signupUser()} className={classes.loginBtn}>SignUp</Button>
                         </Box>
                     }
                 </Box>

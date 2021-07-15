@@ -1,4 +1,4 @@
-import {makeStyles, Box, withStyles, Typography} from '@material-ui/core';
+import {makeStyles, Box} from '@material-ui/core';
 
 const useStyle = makeStyles({
     

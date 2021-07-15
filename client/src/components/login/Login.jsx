@@ -134,7 +134,7 @@ const Login = ( {open, setOpen, setAccount }) => {
                             <TextField onChange={(e) => onInputChange(e)} name='email' label='Enter Email' />
                             <TextField onChange={(e) => onInputChange(e)} name='password' label='Enter Password' />
                             <TextField onChange={(e) => onInputChange(e)} name='phone' label='Enter Phone Number' />
-                            <Button variant='contained' onclick={() => signupUser()} className={classes.loginBtn}>SignUp</Button>
+                            <Button variant='contained' onClick={() => signupUser()} className={classes.loginBtn}>SignUp</Button>
                         </Box>
                     }
                 </Box>

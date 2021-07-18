@@ -7,7 +7,9 @@ const ContextProvider = ({children}) => {
     const [ account, setAccount ] = useState('');
     
     return (
-        <LoginContext.Provider value={{ account, setAccount }}>
+        <LoginContext.Provider 
+            value={{ account, setAccount }}
+        >
             {children}
         </LoginContext.Provider>
     )

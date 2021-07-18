@@ -5,7 +5,8 @@ import { Link } from 'react-router-dom';
 
 //component
 import LoginDialog from '../login/Login';
-import {LoginContext } from '../../context/ContextProvider'
+import {LoginContext} from '../../context/ContextProvider';
+import Profile from './Profile';
 
 const useStyle = makeStyles({
     login: {
@@ -34,7 +35,7 @@ const useStyle = makeStyles({
 })
 
 
-const Header = () => {
+const HeaderButtons = () => {
     const classes = useStyle();
     const [open, setOpen] = useState(false);
     const { account, setAccount } = useContext(LoginContext);
@@ -46,7 +47,7 @@ const Header = () => {
     return (
         <Box className={classes.wrapper}>
             {
-                account ? <Typography>{account}</Typography> :
+                account ? <Profile account={account} setAccount={setAccount} /> :
                 <Link>
                     <Button variant="contained" onClick={()=> openLoginDialog()} className={classes.login}>Login</Button>
                 </Link>
@@ -61,4 +62,4 @@ const Header = () => {
     )
 }
 
-export default Header;
+export default HeaderButtons;

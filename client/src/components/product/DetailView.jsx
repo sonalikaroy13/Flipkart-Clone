@@ -50,7 +50,7 @@ const DetailView = ({ match }) => {
     const fassured = 'https://static-assets-web.flixcart.com/www/linchpin/fk-cp-zion/img/fa_62673a.png';
     const sellerURL = 'https://rukminim1.flixcart.com/lockin/774/185/images/CCO__PP_2019-07-14.png?q=50';
 
-    const { products } = useSelector(state => state.getProductDetails);
+    const { product } = useSelector(state => state.getProductDetails);
 
     const date = new Date(new Date().getTime() + (5*24*60*60*1000));  //inner bracket in milliseconds
 
@@ -58,25 +58,25 @@ const DetailView = ({ match }) => {
 
     useEffect(() => {
         dispatch(getProductDetails(match.params.id));
-    }, [dispatch, products, match])
+    }, [dispatch, product, match])
 
     return (
         <Box className={classes.component}>  
-            { products && Object.keys(products).length &&      
+            { product && Object.keys(product).length &&      
                 <Box className={classes.container}>
                     <Box style={{ minWidth: '40%' }}>
-                        <ActionItems products={products} />
+                        <ActionItems product={product} />
                     </Box>
                     <Box className={classes.rightContainer}>
-                        <Typography>{products.title.longTitle}</Typography>
-                        <Typography  className={clsx(classes.smallText, classes.greyTextColor)}>
+                        <Typography>{product.title.longTitle}</Typography>
+                        <Typography className={clsx(classes.smallText, classes.greyTextColor)}>
                             8 Ratings & 1 Review
                             <span><img src={fassured} style={{ width: 77, marginLeft: 20}}/></span>
                         </Typography>
                         <Typography>
-                            <span className={classes.price}>₹{products.price.cost}</span> &nbsp;&nbsp;&nbsp;
-                            <span className={classes.greyTextColor}><strike>₹{products.price.mrp}</strike></span> &nbsp;&nbsp;&nbsp;
-                            <span style={{color: '#388E3C'}}>{products.price.discount} off</span>
+                            <span className={classes.price}>₹{product.price.cost}</span> &nbsp;&nbsp;&nbsp;
+                            <span className={classes.greyTextColor}><strike>₹{product.price.mrp}</strike></span> &nbsp;&nbsp;&nbsp;
+                            <span style={{color: '#388E3C'}}>{product.price.discount} off</span>
                         </Typography>
                         <Typography style={{marginTop: 20, fontWeight: 600}}>Available offers</Typography>
                         <Box className={classes.smallText}>
@@ -112,7 +112,7 @@ const DetailView = ({ match }) => {
                                 </TableRow>
                                 <TableRow className={classes.smallText}>
                                     <TableCell className={classes.greyTextColor}>Description</TableCell>
-                                    <TableCell>{products.description}</TableCell>
+                                    <TableCell>{product.description}</TableCell>
                                 </TableRow>
                             </TableBody>
                         </Table>

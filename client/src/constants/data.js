@@ -99,7 +99,7 @@ export const products = [
             cost: 1124,
             discount: '40%'
         },
-        description: '',
+        description: 'Now you can get salon-like hair styling at your home, using this Silky Shine hair dryer from Nova. Equipped with the ionic conditioning technology, this hair dryer also ensures that your hair is taken care of during the styling process. Protection for your stresses. This hair dryer features the Ehd + technology which ensures that only the right amount of heat is distributed on your hair and thus prevents any damage to your hair.',
         discount: 'From ₹499', 
         tagline: 'Kubra, Nova & more' 
     },

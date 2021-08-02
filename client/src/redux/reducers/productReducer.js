@@ -11,10 +11,10 @@ export const getProductsReducer = (state = { products: [] }, action) => {
     }
 };
 
-export const getProductDetailsReducer = (state = { products: [] }, action) => {
+export const getProductDetailsReducer = (state = { product: [] }, action) => {
     switch (action.type) {
         case actionType.GET_PRODUCT_DETAIL_SUCCESS:
-            return { products: action.payload };
+            return { product: action.payload };
         case actionType.GET_PRODUCT_DETAIL_FAIL:
             return { error: action.payload };        
         default:

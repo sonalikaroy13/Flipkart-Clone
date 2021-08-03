@@ -12,3 +12,7 @@ export const addToCart = (id) => async (dispatch) => {
         console.log('Error while calling add to cart API');
     }
 }
+
+export const removeFromCart = (id) => async (dispatch) => {
+    dispatch({ type: actionTypes.REMOVE_FROM_CART, payload: id});
+}

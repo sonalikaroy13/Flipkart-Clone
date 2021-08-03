@@ -1,14 +1,18 @@
 import { useEffect } from 'react';
-import {makeStyles, Box, Typography} from '@material-ui/core';
-import { useSelector } from 'react-redux';
+import {makeStyles, Box, Typography, Button} from '@material-ui/core';
+import { useSelector, useDispatch } from 'react-redux';
+import { removeFromCart } from '../../redux/actions/cartActions';
 
 //components
-import CartItem from './CartItem'
+import CartItem from './CartItem';
+import EmptyCart from './EmptyCart';
+import TotalView from './TotalView';
 
 const useStyle = makeStyles({
     component: {
         marginTop: 55,
-        padding: '30px 135px'
+        padding: '30px 135px',
+        display: 'flex'
     },
     leftComponent: {
         width: '67%',
@@ -16,6 +20,21 @@ const useStyle = makeStyles({
     header: {
         padding: '15px 24px',
         background: '#FFF'
+    },
+    bottom: {
+        padding: '16px 22px',
+        background: '#FFF',
+        borderTop: '1px solid #F0F0F0',
+        boxShadow: '0 -2px 10px 0 rgb(0 0 0 /10%)'
+    },
+    placeOrder: {
+        background: '#FB641B',
+        color: '#FFF',
+        borderRadius: 2,
+        width: 250,
+        height: 50,
+        display: 'flex',
+        marginLeft: 'auto'
     }
 })
 
@@ -24,9 +43,15 @@ const Cart = () => {
 
     const { cartItems } = useSelector(state => state.cart);
 
+    const dispatch = useDispatch();
+
     useEffect(() => {
         console.log(cartItems);
     })
+
+    const removeItemFromCart = (id) => {
+        dispatch(removeFromCart(id));
+    }
 
     return (
         <Box>
@@ -39,16 +64,16 @@ const Cart = () => {
                         </Box>
                         {
                             cartItems.map(item => (
-                                <CartItem item={item} />
+                                <CartItem item={item} removeItemFromCart={removeItemFromCart}/>
                             ))
                         }
+                        <Box className={classes.bottom}>
+                            <Button className={classes.placeOrder} variant="contained">Place Order</Button>
+                        </Box> 
                     </Box>
-                    <Box className={classes.rightComponent}>
-                        
-                    </Box>
-                    <p>Hello value</p>
+                    <TotalView cartItems={cartItems} />
                 </Box>
-                : <p>Empty Cart</p>
+                : <EmptyCart />
             }
         </Box>
     )

@@ -1,6 +1,9 @@
 import { Box, Button, Card, makeStyles, Typography } from "@material-ui/core"
 import clsx from 'clsx';
 
+//components
+import GroupButtons from "./GroupButtons";
+
 const useStyle = makeStyles({
     component: {
         display: 'flex',
@@ -9,6 +12,8 @@ const useStyle = makeStyles({
     },
     leftComponent: {
         margin: 20,
+        display: 'flex',
+        flexDirection: 'column'
     },
     rightComponent: {
         margin: 20,
@@ -38,8 +43,7 @@ const useStyle = makeStyles({
     }
 })
 
-
-const CartItem = ({ item }) => {
+const CartItem = ({ item, removeItemFromCart }) => {
     const classes = useStyle();
     const fassured = 'https://static-assets-web.flixcart.com/www/linchpin/fk-cp-zion/img/fa_62673a.png';
     
@@ -47,6 +51,7 @@ const CartItem = ({ item }) => {
         <Card className={classes.component}>
             <Box className={classes.leftComponent}>
                 <img src={item.url} className={classes.image} />
+                <GroupButtons />
             </Box>
             <Box className={classes.rightComponent}>
                 <Typography>{item.title.longTitle}</Typography>

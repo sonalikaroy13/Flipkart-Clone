@@ -1,64 +1,70 @@
 import paytmchecksum from '../paytm/PaytmChecksum.js';
-import { paytmParams, paytmMerchantKey } from '../index.js';
+import { paytmParams, paytmMerchantkey } from '../index.js';
 import formidable from 'formidable';
 import https from 'https';
 
-export const addPaymentGateway = async (request, response) => {
-    let paytmChecksum = await paytmchecksum.generateSignature(paytmParams, paytmMerchantKey);
 
+
+export const addPaymentGateway = async (request, response) => {
+    let paytmCheckSum = await paytmchecksum.generateSignature(paytmParams, paytmMerchantkey);
     try {
         let params = {
-            ...paytmParams, 'CHECKSUMHASH': paytmChecksum
-        }
+            ...paytmParams,
+            'CHECKSUMHASH': paytmCheckSum
+        };
         response.json(params);
     } catch (error) {
         console.log(error);
     }
 }
 
-export const paymentResponse = async (request, response) => {
+export const paymentResponse = (request, response) => {
+
     const form = new formidable.IncomingForm();
-    let paytmCheckSum = request.body.CHECKSUMHASH;
-    delete request.body.CHECKSUMHASH;
+        let paytmCheckSum = request.body.CHECKSUMHASH;
+        delete request.body.CHECKSUMHASH;
 
-    let isVerifySignature = paytmchecksum.verifySignature(request.body, 'bKMfNxPPf_QdZppa', paytmCheckSum);
+        var isVerifySignature = paytmchecksum.verifySignature(request.body, 'bKMfNxPPf_QdZppa', paytmCheckSum);
+        console.log(isVerifySignature);
+        if (isVerifySignature) {
+            var paytmParams = {};
+            paytmParams["MID"] = request.body.MID;
+            paytmParams["ORDERID"] = request.body.ORDERID;
 
-    if(isVerifySignature) {
-        paytmParams['MID'] = request.body.MID;
-        paytmParams['ORDER_ID'] = request.body.ORDER_ID;
+            paytmchecksum.generateSignature(paytmParams, 'bKMfNxPPf_QdZppa').then(function (checksum) {
 
-        paytmchecksum.generateSignature(paytmParams, 'bKMfNxPPf_QdZppa').then(function(checksum){
-            paytmParams['CHECKSUMHASH'] = checksum;
+                paytmParams["CHECKSUMHASH"] = checksum;
 
-            let post_data = JSON.stringify(paytmParams);
+                var post_data = JSON.stringify(paytmParams);
 
-            let options = {
-                hostname: 'securegw-stage.paytm.in',
-                port: 443,
-                path: '/order/status',
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Content-Length': post_data.length
-                }
-            };
+                var options = {
 
-            let res = ''
+                    hostname: 'securegw-stage.paytm.in',
+                    port: 443,
+                    path: '/order/status',
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Content-Length': post_data.length
+                    }
+                };
 
-            let post_req = https.request(options, function(post_res) {
-                post_res.on('data', function(chunk) {
-                    res += chunk;
-                })
+                var res = "";
+                var post_req = https.request(options, function (post_res) {
+                    post_res.on('data', function (chunk) {
+                        res += chunk;
+                    });
 
-                post_res.on('end', function() {
-                    let result = JSON.parse(res);
-                    response.redirect('http://localhost:3000/');
+                    post_res.on('end', function () {
+                        let result = JSON.parse(res)
+                        response.redirect(`http://localhost:3000/`)
+                    });
                 });
+                post_req.write(post_data);
+                post_req.end();
             });
-            post_req.write(post_data);
-            post_req.end();
-        });
-    } else {
-        console.log('Checksum Mismatched!');
-    }
+        } else {
+            console.log("Checksum Mismatched");
+        }
+    console.log('//////////////end')
 }

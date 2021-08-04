@@ -10,7 +10,7 @@ const useStyle = makeStyles(theme => ({
         overflowX: 'overlay',
         [theme.breakpoints.down('md')]: {
             margin: 0
-          },
+        }
     },
     container: {
         textAlign: 'center',

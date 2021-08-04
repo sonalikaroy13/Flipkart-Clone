@@ -35,7 +35,7 @@ export const paymentResponse = async (request, response) => {
             let options = {
                 hostname: 'securegw-stage.paytm.in',
                 port: 443,
-                path: '/order/process',
+                path: '/order/status',
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

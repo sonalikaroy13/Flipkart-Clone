@@ -7,18 +7,21 @@ import { useHistory } from 'react-router-dom';
 import { payUsingPaytm } from "../../service/api";
 import { post } from "../../utils/paytm";
 
-const useStyle = makeStyles({
+const useStyle = makeStyles(theme => ({
     leftContainer: {
-        padding: '40px 0 0 80px'
+        padding: '40px 0 0 80px',
+        [theme.breakpoints.down('md')] : {
+            padding: '20px 20px'
+        }
     },
     image: {
         padding: '15px 20px',
         border: '1px solid #f0f0f0',
-        width: '95%'
+        width: '100%'
     },
     button: {
         height: 50,
-        width: '46%',
+        width: '48.5%',
         borderRadius: 2
     },
     addToCart: {
@@ -30,7 +33,7 @@ const useStyle = makeStyles({
         background: '#fb641b',
         color: '#FFF'
     }
-})
+}))
 
 
 const ActionItems = ({ product }) => {

@@ -1,5 +1,5 @@
 
-import { Box, makeStyles, Table, TableBody, TableRow, TableCell, Typography} from '@material-ui/core';
+import { Box, Grid, makeStyles, Table, TableBody, TableRow, TableCell, Typography} from '@material-ui/core';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getProductDetails } from '../../redux/actions/productActions';
@@ -8,21 +8,25 @@ import { LocalOffer as Badge } from '@material-ui/icons';
 
 import ActionItems from './ActionItems';
 
-const useStyle = makeStyles({
+const useStyle = makeStyles(theme => ({
     component: {
         marginTop: 55,
         background: '#F2F2F2',
     },
     container: {
-        margin: '0 80px',
         background: '#FFF',
-        display: 'flex'
+        display: 'flex',
+        [theme.breakpoints.down('md')]: {
+            margin: 0
+        }
     },
     rightContainer: {
         marginTop: 50,
         '& > *': {
             marginTop: 10
-        }
+        },
+        paddingLeft: 10,
+        paddingRight: 10
     },
     smallText: {
         fontSize: 14,
@@ -42,8 +46,14 @@ const useStyle = makeStyles({
         fontSize: 14,
         marginRight: 10,
         color: '#00CC00'
+    },
+    super: {
+        width: 360,
+        [theme.breakpoints.down('sm')]: {
+            width: 280
+        }
     }
-})
+}))
 
 const DetailView = ({ match }) => {
     const classes = useStyle();
@@ -63,11 +73,11 @@ const DetailView = ({ match }) => {
     return (
         <Box className={classes.component}>  
             { product && Object.keys(product).length &&      
-                <Box className={classes.container}>
-                    <Box style={{ minWidth: '40%' }}>
+                <Grid container className={classes.container}>
+                    <Grid item lg={4} md={4} sm={8} xs={12}>
                         <ActionItems product={product} />
-                    </Box>
-                    <Box className={classes.rightContainer}>
+                    </Grid>
+                    <Grid item lg={8} md={8} sm={12} xs={12} className={classes.rightContainer}>
                         <Typography>{product.title.longTitle}</Typography>
                         <Typography className={clsx(classes.smallText, classes.greyTextColor)}>
                             8 Ratings & 1 Review
@@ -107,17 +117,17 @@ const DetailView = ({ match }) => {
                                 </TableRow>
                                 <TableRow>
                                     <TableCell colSpan={2}>
-                                        <img src={sellerURL} style={{ width: 390}}/>
+                                        <img className={classes.super} src={sellerURL}/>
                                     </TableCell>
                                 </TableRow>
                                 <TableRow className={classes.smallText}>
                                     <TableCell className={classes.greyTextColor}>Description</TableCell>
-                                    <TableCell>{product.description}</TableCell>
+                                    <TableCell style={{textAlign: 'justify'}}>{product.description}</TableCell>
                                 </TableRow>
                             </TableBody>
                         </Table>
-                    </Box>   
-                </Box>
+                    </Grid>   
+                </Grid>
             }
         </Box>
     )

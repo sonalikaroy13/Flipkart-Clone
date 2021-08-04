@@ -11,7 +11,7 @@ import { useEffect } from 'react';
 import { getProducts as listProducts } from '../../redux/actions/productActions';
 // import { products } from '../../constants/data';
 
-const useStyle = makeStyles({
+const useStyle = makeStyles(theme => ({
     component: {
         padding: 10,
         background: '#f1f3f6'
@@ -19,10 +19,20 @@ const useStyle = makeStyles({
     rightwrapper: {
         background: '#FFFFFF',
         padding: 5,
-        margin: '12px 0 0 10px',
-        width: '17%'
+        marginTop: '12px',
+        marginLeft: '10px',
+        width: '16.5%',
+        [theme.breakpoints.down('md')]: {
+            display: 'none'
+        }
+    },
+    leftwrapper: {
+        width: '83%',
+        [theme.breakpoints.down('md')]: {
+            width: '100%'
+        }
     }
-})
+}))
 
 const Home = () => {
     const classes = useStyle();
@@ -42,15 +52,15 @@ const Home = () => {
             <Box className={classes.component}>
                 <Banner />
                 <Box style={{display: 'flex'}}>
-                    <Box style={{width: '83%'}}>
+                    <Box className={classes.leftwrapper}>
                         <Slide 
                             timer={true}
-                            title="Deal of the Day"
+                            title="Deals of the Day"
                             products={products}
                         />
                     </Box>
                     <Box className={classes.rightwrapper}>
-                        <img src={adURL} style={{width:222, height: '100%'}}/>
+                        <img src={adURL} style={{width:'100%', height: '100%'}}/>
                     </Box>
                 </Box>
                 <MidSection />

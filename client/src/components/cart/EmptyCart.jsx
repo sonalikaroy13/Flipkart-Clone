@@ -1,12 +1,15 @@
 import { Box, Button, makeStyles, Typography } from '@material-ui/core';
 import { useHistory } from 'react-router-dom';
 
-const useStyle = makeStyles({
+const useStyle = makeStyles(theme => ({
     component: {
         margin: '80px 140px',
         width: '80%',
         background: '#FFF',
-        height: '65vh'
+        height: '65vh',
+        [theme.breakpoints.down('sm')]: {
+            margin: '80px',
+        }
     },
     image: {
         width: '15%'
@@ -27,7 +30,7 @@ const useStyle = makeStyles({
         background: '#2874F0',
         color: '#FFF'
     }
-})
+}))
 
 const EmptyCart = () => {
 

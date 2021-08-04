@@ -3,7 +3,6 @@ import { useState, useEffect } from "react";
 
 const useStyle = makeStyles({
     component: {
-        width: '30%',
         background: '#FFF',
         marginLeft: 15
     },

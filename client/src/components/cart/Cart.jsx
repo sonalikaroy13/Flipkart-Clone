@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import {makeStyles, Box, Typography, Button} from '@material-ui/core';
+import {makeStyles, Box, Typography, Button, Grid} from '@material-ui/core';
 import { useSelector, useDispatch } from 'react-redux';
 import { removeFromCart } from '../../redux/actions/cartActions';
 import { payUsingPaytm } from "../../service/api";
@@ -10,14 +10,22 @@ import CartItem from './CartItem';
 import EmptyCart from './EmptyCart';
 import TotalView from './TotalView';
 
-const useStyle = makeStyles({
+const useStyle = makeStyles(theme => ({
     component: {
-        marginTop: 55,
         padding: '30px 135px',
-        display: 'flex'
+        display: 'flex',
+        [theme.breakpoints.down('sm')]: {
+            padding: '15px 0'
+        },
+        [theme.breakpoints.down('md')]: {
+            padding: '15px 50px'
+        }
     },
     leftComponent: {
-        width: '67%',
+        paddingRight: 15,
+        [theme.breakpoints.down('sm')]: {
+            marginBottom: 15
+        }
     },
     header: {
         padding: '15px 24px',
@@ -38,7 +46,7 @@ const useStyle = makeStyles({
         display: 'flex',
         marginLeft: 'auto'
     }
-})
+}))
 
 const Cart = () => {
     const classes = useStyle();
@@ -70,8 +78,8 @@ const Cart = () => {
         <Box>
             {
                 cartItems.length ? 
-                <Box className={classes.component}>
-                    <Box className={classes.leftComponent}>
+                <Grid container className={classes.component}>
+                    <Grid item lg={9} md={9} sm={12} xs={12} className={classes.leftComponent}>
                         <Box className={classes.header}>
                             <Typography style={{fontWeight: 600, fontSize: 18}}>My Cart ({cartItems.length})</Typography>
                         </Box>
@@ -83,9 +91,11 @@ const Cart = () => {
                         <Box className={classes.bottom}>
                             <Button className={classes.placeOrder} onClick={() => buyNow()} variant="contained">Place Order</Button>
                         </Box> 
-                    </Box>
-                    <TotalView cartItems={cartItems} />
-                </Box>
+                    </Grid>
+                    <Grid item lg={3} md={3} sm={12} xs={12} >
+                        <TotalView cartItems={cartItems} />
+                    </Grid>
+                </Grid>
                 : <EmptyCart />
             }
         </Box>

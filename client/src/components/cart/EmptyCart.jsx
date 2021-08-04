@@ -3,16 +3,19 @@ import { useHistory } from 'react-router-dom';
 
 const useStyle = makeStyles(theme => ({
     component: {
-        margin: '80px 140px',
-        width: '80%',
+        margin: '80px auto',
+        width: '70%',
         background: '#FFF',
-        height: '65vh',
+        height: '75vh',
         [theme.breakpoints.down('sm')]: {
-            margin: '80px',
+            margin: 'auto'
         }
     },
     image: {
-        width: '15%'
+        width: '15%',
+        [theme.breakpoints.down('sm')]: {
+            width: '40%'
+        }
     },
     container: {
         textAlign: 'center',

@@ -9,7 +9,7 @@ import LoginDialog from '../login/Login';
 import {LoginContext} from '../../context/ContextProvider';
 import Profile from './Profile';
 
-const useStyle = makeStyles({
+const useStyle = makeStyles(theme => ({
     login: {
         background: '#ffffff',
         color: '#2874f0',
@@ -17,9 +17,12 @@ const useStyle = makeStyles({
         fontWeight: 600,
         borderRadius: 2,
         padding: '5px 40px',
-        boxShadow: 'none'
+        boxShadow: 'none',
+        [theme.breakpoints.down('sm')] : {
+            background: '#2874f0',
+            color: '#FFF'
+        }
     },
-
     wrapper: {
         margin: '0 7% 0 auto',
         display: 'flex',
@@ -27,13 +30,28 @@ const useStyle = makeStyles({
             marginRight: 50,
             alignItems: 'center',
             textDecoration: 'none',
-            color: '#fff'
+            color: '#fff',
+            [theme.breakpoints.down('sm')] : {
+                color: '#2874f0',
+                marginTop: 10
+            }
+        },
+        [theme.breakpoints.down('sm')] : {
+            display: 'flex',
+            alignItems: 'center',
+            flexDirection: 'column'
         }
     }, 
     container: {
-        display: 'flex'
+        display: 'flex',
+        [theme.breakpoints.down('sm')] : {
+            marginTop: 10
+        }
+    },
+    cart: {
+        marginLeft: 10
     }
-})
+}));
 
 
 const HeaderButtons = () => {
@@ -58,7 +76,7 @@ const HeaderButtons = () => {
             <Link><Typography style={{marginTop: 5}}>More</Typography></Link>
             <Link to='/cart' className={classes.container}>
                 <Badge badgeContent={cartItems.length} color="secondary"><ShoppingCart /></Badge> 
-                <Typography style={{marginLeft: 10}}>Cart</Typography>
+                <Typography className={classes.cart}>Cart</Typography>
             </Link>
             <LoginDialog open={open} setOpen={setOpen} setAccount={setAccount}/>
         </Box>
